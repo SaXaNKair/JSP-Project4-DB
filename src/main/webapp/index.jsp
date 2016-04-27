@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Product Maintenance</h1>
-<a href='/DisplayProducts'>View Products</a>
+<a href='/DisplayProducts'>View Products</a><br>
+
 </body>
 </html>

@@ -15,12 +15,26 @@ public class AddProduct extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Product product = new Product();
+		//retrieve info about the new product
 		String code = request.getParameter("code");
 		String description = request.getParameter("description");
-		Double price = Double.parseDouble(request.getParameter("price"));
+        Double price = null;
+        try {
+            price = Double.parseDouble(request.getParameter("price"));
+        }catch (Exception e){
+            price = 0.0;
+        }
+		//set new properties to the product
 		product.setCode(code);
 		product.setDescription(description);
 		product.setPrice(price);
+		//if any of those were empty send it back
+		if(code.length() == 0 || description.length() == 0 || price.toString().length() == 0){
+            request.setAttribute("message", "<h3>You must fill out all three fields</h3>");
+			request.setAttribute("product", product);
+			request.getRequestDispatcher("Views/AddProduct.jsp").forward(request, response);
+		}
+
 		if(!ProductIO.exists(product.getCode()))
 			ProductIO.insertProduct(product);
 		else{
