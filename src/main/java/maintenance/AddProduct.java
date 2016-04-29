@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import data.DBConnect;
 
 @WebServlet("/AddProduct")
 public class AddProduct extends HttpServlet {
@@ -35,8 +36,8 @@ public class AddProduct extends HttpServlet {
 			request.getRequestDispatcher("Views/AddProduct.jsp").forward(request, response);
 		}
 
-		if(!ProductIO.exists(product.getCode()))
-			ProductIO.insertProduct(product);
+		if(!DBConnect.exists(product.getCode()))
+			DBConnect.insertProduct(product);
 		else{
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();

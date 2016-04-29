@@ -12,19 +12,6 @@ import java.util.ArrayList;
 
 public class DBConnect {
 
-    public static void main(String[] args) {
-        Product p = new Product();
-        p.setCode("hello2");
-        p.setDescription("updated");
-        p.setPrice(12.25);
-        updateProduct(p);
-
-        ArrayList<Product> products = selectProducts();
-        for (Product x : products){
-            System.out.println(x.getCode() + " " + x.getDescription() + " " + x.getPrice()/100.0);
-        }
-    }
-
     public static Connection getConnection() {
         Connection con = null;
         try {
@@ -168,7 +155,7 @@ public class DBConnect {
                 Product p = new Product();
                 p.setCode(rs.getString("ProductCode"));
                 p.setDescription(rs.getString("ProductDescription"));
-                p.setPrice(rs.getDouble("ProductPrice"));
+                p.setPrice(rs.getInt("ProductPrice")/100.0);
                 products.add(p);
             }
             return products;
@@ -221,11 +208,9 @@ public class DBConnect {
     }
 
     public static void updateProduct(Product product){
-        //TODO uodateProduct()
         if(exists(product.getCode())){
             Connection connection = getConnection();
             PreparedStatement ps = null;
-            ResultSet rs = null;
 
             String query = "UPDATE  `MusicStore`.`Product` SET  `ProductCode` =  ?," +
                     "`ProductDescription` =  ?," +
@@ -243,7 +228,6 @@ public class DBConnect {
             }
             finally
             {
-                DBUtil.closeResultSet(rs);
                 DBUtil.closePreparedStatement(ps);
                 DBUtil.closeConnection(connection);
             }
@@ -254,6 +238,27 @@ public class DBConnect {
 
     public static void deleteProduct(Product product){
         //TODO deleteProduct()
+        if(exists(product.getCode())){
+            Connection connection = getConnection();
+            PreparedStatement ps = null;
+
+            String query = "DELETE FROM `MusicStore`.`Product` WHERE `Product`.`ProductCode` = ?";
+            try {
+                ps = connection.prepareStatement(query);
+                ps.setString(1, product.getCode());
+                ps.executeUpdate();
+            }catch(SQLException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                DBUtil.closePreparedStatement(ps);
+                DBUtil.closeConnection(connection);
+            }
+        }else{
+            System.out.println("Product with code: " + product.getCode() + " not found");
+        }
     }
 
 

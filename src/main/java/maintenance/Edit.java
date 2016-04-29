@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import data.*;
 /**
  * Servlet implementation class Edit
  */
@@ -14,21 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 public class Edit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public Edit() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String productCode = (String) request.getParameter("code");
 		
-		Product product = ProductIO.selectProduct(productCode);
+		Product product = DBConnect.selectProduct(productCode);
 		String description = (String) request.getParameter("description");
 		Double price = Double.parseDouble(request.getParameter("price"));
 		product.setDescription(description);
 		product.setPrice(price);
-		ProductIO.updateProduct(product);
+		DBConnect.updateProduct(product);
 		
 		request.getRequestDispatcher("/DisplayProducts").forward(request, response);
 	}

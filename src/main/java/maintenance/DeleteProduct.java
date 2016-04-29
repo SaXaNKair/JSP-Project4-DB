@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import data.*;
 /**
  * Servlet implementation class DeleteProduct
  */
@@ -19,12 +19,11 @@ public class DeleteProduct extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ProductIO.init(ProductIO.path);
 		String productCode = "";
 
 		productCode = (String) request.getParameter("code");
-		Product product = ProductIO.selectProduct(productCode);
-		ProductIO.deleteProduct(product);
+		Product product = DBConnect.selectProduct(productCode);
+		DBConnect.deleteProduct(product);
 		
 		request.getRequestDispatcher("/DisplayProducts").forward(request, response);
 	}
