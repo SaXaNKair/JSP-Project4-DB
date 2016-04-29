@@ -4,15 +4,13 @@ import java.io.*;
 import java.util.*;
 
 
-//import java.music.business.*;
-
 public class ProductIO {
 	
 	public static void main(String[] args){
 		
 	}
 
-	public static final String path = "/Users/admin/Desktop/College/JSP-Project1/src/main/webapp/WEB-INF/product.txt";
+	public static final String path = "/Users/admin/Downloads/my-maven/src/main/webapp/WEB-INF/product.txt";
     private static List<Product> products = null;
     private static String filePath = "../product.txt";
 

@@ -14,7 +14,7 @@ public class Product implements Serializable
     {
         code = "";
         description = "";
-        price = 0;
+        price = 0.0;
     }
     
     public void setId(Long productId){

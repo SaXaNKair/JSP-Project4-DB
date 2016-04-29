@@ -4,8 +4,13 @@
   xmlns="http://java.sun.com/xml/ns/javaee" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">   
-  
+  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <resource-ref>
+    <description>DataSource Reference</description>
+    <res-ref-name>jdbc/MusicStore</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
   <servlet>
     <servlet-name>DisplayProducts</servlet-name>
     <servlet-class>maintenance.DisplayProducts</servlet-class>
@@ -39,4 +44,8 @@
     <servlet-name>AddProduct</servlet-name>
     <url-pattern>/addProduct</url-pattern>
   </servlet-mapping>
+
+  <listener>
+    <listener-class>util.MusicStoreContextListener</listener-class>
+  </listener>
 </web-app>
